@@ -20,7 +20,7 @@
         props:{
           value:"bigRegionCode",
           label:"bigRegionName",
-          children:"cities"
+          children:"children"
         },
         bigRegion:[
           {
@@ -81,11 +81,31 @@
     },
     methods: {
       initRegion(){
+        this.bigRegion.map(item=>{
+          this.$set(item,"bigRegionName",item.bigRegionName);
+          this.$set(item,"children",[])
+        })
         this.options = this.bigRegion
       },
       handleChange(val) {
-        let value = val[0]
-        
+        let value = val[0];
+         this.options.map(item=>{
+           if(item.bigRegionCode == value){
+             var smallRegionArr=[];
+              this.smallRegion.map(item1=>{
+                // console.log(JSON.parse(item1.smallRegionName))
+                delete item1.bigRegionCode
+                delete item1.bigRegionName
+                this.$set(item.children,"smallRegionName",item1.smallRegionName)
+                // console.log(item.children)
+                return smallRegionArr.push(item1)
+              })
+             // console.log(smallRegionArr)
+             this.$set(item.children,"smallRegionName",smallRegionArr.smallRegionName)
+             console.log(item.children);
+           }
+
+        })
 
       }
     }
